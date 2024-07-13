@@ -10,14 +10,17 @@ import requests
 load_dotenv()
 
 # smtplib constants
-MY_EMAIL = os.getenv("MY_EMAIL")
-MY_PASSWORD = os.getenv("MY_PASSWORD")
+# MY_EMAIL = os.getenv("MY_EMAIL")
+# MY_PASSWORD = os.getenv("MY_PASSWORD")
+MY_EMAIL = os.environ.get("MY_EMAIL")
+MY_PASSWORD = os.environ.get("MY_PASSWORD")
 # genderize constant
 GENDERIZE_API_ENDPOINT = "https://api.genderize.io"
 # ageify constant
 AGEIFY_API_ENDPOINT = "https://api.agify.io"
 # openweathermap constants
-OPENWEATHERMAP_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
+# OPENWEATHERMAP_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
+OPENWEATHERMAP_API_KEY = os.environ.get("OPENWEATHERMAP_API_KEY")
 GEOCODING_API_ENDPOINT = "http://api.openweathermap.org/geo/1.0/direct"
 OPENWEATHERMAP_API_ENDPOINT = "http://api.openweathermap.org/data/2.5/forecast"
 
@@ -408,4 +411,4 @@ def weather_forecaster():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
