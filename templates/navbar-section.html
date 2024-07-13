@@ -1,0 +1,16 @@
+<nav>
+    <div class="nav-logo">
+        <!-- <a href="{{ url_for('home') }}"><img class="logo-img" src="{{ url_for('static', filename='assets/logo-512x512.png') }}" alt=""></a> -->
+        <a href="{{ url_for('home') }}">mup</a>
+    </div>
+    <ul id="menuList">
+        <li><a href="{{ url_for('home') }}#home">Home</a></li>
+        <li><a href="{{ url_for('home') }}#about">About</a></li>
+        <!-- <li><a href="#">Services</a></li>-->
+        <li><a href="{{ url_for('home') }}#contact">Contact</a></li>
+        <li><a href="{{ url_for('projects') }}">Projects</a></li>
+    </ul>
+    <div class="menu-icon">
+        <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+    </div>
+</nav>

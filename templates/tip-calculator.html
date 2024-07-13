@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head-section.html" %}
+    <title>Tip Calculator</title>
+  </head>
+  <body>
+    {% include "navbar-section.html" %}
+    <div class="main-section">
+      <h1 class="project-title">Welcome to the Tip Calculator!</h1>
+      <form method="post" action="{{ url_for('tip_calculator') }}">
+        <div class="input-box">
+          <label for="tip-calculator-bill">How much was the total bill?</label>
+          <input id="tip-calculator-bill" type="text" placeholder="Total Bill" name="bill" required>
+          <br>
+          <label for="tip-calculator-tip">How much would you like to tip? (%)</label>
+          <input id="tip-calculator-tip" type="text" placeholder="Tip Amount (%)" name="tip" required>
+          <br>
+          <label for="tip-calculator-people">How many people are splitting the bill?</label>
+          <input id="tip-calculator-people" type="text" placeholder="Amount of People" name="people" required>
+        </div>
+        <input type="submit" value="Calculate Bill per Person!" class="project-btn btn-2">
+      </form>
+      <h2 class="result">Each person should pay: {{ FINAL_BILL_PER_PERSON }}</h2>
+    </div>
+    {% include "footer-section.html" %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/f8e1a90484.js" crossorigin="anonymous"></script>
+  </body>
+</html>

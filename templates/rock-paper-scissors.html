@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head-section.html" %}
+    <title>Rock, Paper, Scissors</title>
+  </head>
+  <body>
+    {% include "navbar-section.html" %}
+    <div class="main-section">
+      <h1 class="project-title">Welcome to Rock, Paper, Scissors!</h1>
+      <form method="post" action="{{ url_for('rock_paper_scissors') }}">
+        <input type="submit" value="Rock" class="project-btn btn-2" name="choice">
+        <input type="submit" value="Paper" class="project-btn btn-2" name="choice">
+        <input type="submit" value="Scissors" class="project-btn btn-2" name="choice">
+      </form>
+      <div class="choices">
+        <h3>You choose: {{ PLAYER_HAND }}</h3>
+        {% if PLAYER_HAND == "Rock" %}
+        <img src="{{ url_for('static', filename='assets/rock.jpg') }}" alt="rock-img">
+        {% endif %}
+        {% if PLAYER_HAND == "Paper" %}
+        <img src="{{ url_for('static', filename='assets/paper.jpg') }}" alt="paper-img">
+        {% endif %}
+        {% if PLAYER_HAND == "Scissors" %}
+        <img src="{{ url_for('static', filename='assets/scissors.jpg') }}" alt="scissors-img">
+        {% endif %}
+        <h3>AI chooses: {{ AI_HAND }}</h3>
+        {% if AI_HAND == "Rock" %}
+        <img src="{{ url_for('static', filename='assets/rock.jpg') }}" alt="rock-img">
+        {% endif %}
+        {% if AI_HAND == "Paper" %}
+        <img src="{{ url_for('static', filename='assets/paper.jpg') }}" alt="paper-img">
+        {% endif %}
+        {% if AI_HAND == "Scissors" %}
+        <img src="{{ url_for('static', filename='assets/scissors.jpg') }}" alt="scissors-img">
+        {% endif %}
+      </div>
+      <h2 class="result">{{ RESULT }}</h2>
+    </div>
+    {% include "footer-section.html" %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/f8e1a90484.js" crossorigin="anonymous"></script>
+  </body>
+</html>

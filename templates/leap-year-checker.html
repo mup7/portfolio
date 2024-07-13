@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head-section.html" %}
+    <title>Leap Year Checker</title>
+  </head>
+  <body>
+    {% include "navbar-section.html" %}
+    <div class="main-section">
+      <h1 class="project-title">Welcome to Leap Year Checker!</h1>
+      <form method="post" action="{{ url_for('leap_year_checker') }}">
+        <div class="input-box">
+          <label for="leap-year-checker-year">Enter a year:</label>
+          <input id="leap-year-checker-year" type="text" placeholder="Year" name="year" required>
+        </div>
+        <input type="submit" value="Check if Leap Year" class="project-btn btn-2">
+      </form>
+      <h2 class="result">{{ LEAP_YEAR_RESULT }}</h2>
+    </div>
+    {% include "footer-section.html" %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/f8e1a90484.js" crossorigin="anonymous"></script>
+  </body>
+</html>

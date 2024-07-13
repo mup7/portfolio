@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head-section.html" %}
+    <title>Heads or Tails</title>
+  </head>
+  <body>
+    {% include "navbar-section.html" %}
+    <div class="main-section">
+      <h1 class="project-title">Welcome to Heads or Tails!</h1>
+      <form method="post" action="{{ url_for('heads_or_tails') }}">
+        <input type="submit" value="Flip Coin" class="project-btn btn-2">
+      </form>
+      {% if COIN_FLIP == "Heads": %}
+      <img src="{{ url_for('static', filename='assets/heads.jpg') }}" alt="heads-img">
+      {% endif %}
+      {% if COIN_FLIP == "Tails": %}
+      <img src="{{ url_for('static', filename='assets/tails.jpg') }}" alt="tails-img">
+      {% endif %}
+      <h2 class="result">Result: {{ COIN_FLIP }}</h2>
+    </div>
+    {% include "footer-section.html" %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/f8e1a90484.js" crossorigin="anonymous"></script>
+  </body>
+</html>

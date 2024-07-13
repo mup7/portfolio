@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head-section.html" %}
+    <title>Age Guesser</title>
+  </head>
+  <body>
+    {% include "navbar-section.html" %}
+    <div class="main-section">
+      <h1 class="project-title">Welcome to Age Guesser!</h1>
+      <form method="post" action="{{ url_for('age_guesser') }}">
+        <div class="input-box">
+          <label for="age-guesser-name">What's your name?</label>
+          <input id="age-guesser-name" type="text" placeholder="Name" name="name" required>
+        </div>
+        <input type="submit" value="Guess Age" class="project-btn btn-2">
+      </form>
+      <h2 class="result">Your age is: {{ AGE_DATA }}</h2>
+    </div>
+    {% include "footer-section.html" %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/f8e1a90484.js" crossorigin="anonymous"></script>
+  </body>
+</html>

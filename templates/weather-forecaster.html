@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head-section.html" %}
+    <title>24 Hour Weather Forecaster</title>
+  </head>
+  <body>
+    {% include "navbar-section.html" %}
+    <div class="main-section">
+      <h1 class="project-title">Welcome to 24 Hour Weather Forecaster!</h1>
+      <form method="post" action="{{ url_for('weather_forecaster') }}">
+        <div class="input-box">
+          <label for="weather-forecaster-city">City Name: </label>
+          <input id="weather-forecaster-city" type="text" placeholder="City" name="city" required>
+          <br>
+          <label for="weather-forecaster-state-country">State Name (US)/Country (Non-US): </label>
+          <input id="weather-forecaster-state-country" type="text" placeholder="State/Country" name="state-country" required>
+          <br>
+        </div>
+        <input type="submit" value="Get Weather Forecast" class="project-btn btn-2">
+      </form>
+      <h3>{{ RESULT_LOCATION }}</h3>
+      {% if FORECAST==True %}
+      {% for i in range(0, 8) %}
+      <h2 class="result">{{ HOURS[i] }}</h2>
+      <p>Weather: {{ RESULTS[i]["weather"][0]["main"] }}</p>
+      <p>Description: {{ RESULTS[i]["weather"][0]["description"] }}</p>
+      <p>Temperature: {{ RESULTS[i]["main"]["temp"] }}°F</p>
+      <p>Feels Like: {{ RESULTS[i]["main"]["feels_like"] }}°F</p>
+      <p>Minimum Temperature: {{ RESULTS[i]["main"]["temp_min"] }}°F</p>
+      <p>Maximum Temperature: {{ RESULTS[i]["main"]["temp_max"] }}°F</p>
+      <p>Humidity: {{ RESULTS[i]["main"]["humidity"] }}%</p>
+      <p>Wind Speed: {{ RESULTS[i]["wind"]["speed"] }}/mph</p>
+      {% endfor %}
+      {% endif %}
+    </div>
+    {% include "footer-section.html" %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/f8e1a90484.js" crossorigin="anonymous"></script>
+  </body>
+</html>

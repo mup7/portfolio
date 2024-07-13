@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head-section.html" %}
+    <title>BMI Calculator</title>
+  </head>
+  <body>
+    {% include "navbar-section.html" %}
+    <div class="main-section">
+      <h1 class="project-title">Welcome to the BMI Calculator!</h1>
+      <form method="post" action="{{ url_for('bmi_calculator') }}">
+        <div class="input-box">
+          <label for="bmi-calculator-height-feet">What is your height? (ft' in'')</label>
+          <div class="height-inputs">
+            <input id="bmi-calculator-height-feet" type="text" placeholder="Feet (ft)" name="heightFeet" required>
+            <input id="bmi-calculator-height-inches" type="text" placeholder="Inches (in)" name="heightInches" required>
+          </div>
+          <br>
+          <label for="bmi-calculator-weight">How much do you weight? (lbs)</label>
+          <input id="bmi-calculator-weight" type="text" placeholder="Weight (lbs)" name="weight" required>
+        </div>
+        <input type="submit" value="Calculate BMI" class="project-btn btn-2">
+      </form>
+      <h2 class="result">Your BMI is: {{ BMI_FORMATTED }}</h2>
+      <h3 class="result">Your BMI range is: {{ BMI_RANGE }}</h3>
+      <p class="result-text">{{ BMI_RANGE_INFO }}</p>
+    </div>
+    {% include "footer-section.html" %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/f8e1a90484.js" crossorigin="anonymous"></script>
+  </body>
+</html>

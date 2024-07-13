@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head-section.html" %}
+    <title>City Coordinates Finder</title>
+  </head>
+  <body>
+    {% include "navbar-section.html" %}
+    <div class="main-section">
+      <h1 class="project-title">Welcome to City Coordinates Finder!</h1>
+      <form method="post" action="{{ url_for('city_coordinates_finder') }}">
+        <div class="input-box">
+          <label for="city-coordinates-finder-city">City Name: </label>
+          <input id="city-coordinates-finder-city" type="text" placeholder="City" name="city" required>
+          <br>
+          <label for="city-coordinates-finder-state-country">State Name (US)/Country (Non-US): </label>
+          <input id="city-coordinates-finder-state-country" type="text" placeholder="State/Country" name="state-country" required>
+          <br>
+        </div>
+        <input type="submit" value="Get Geographical Coordinates" class="project-btn btn-2">
+      </form>
+      <h3>{{ RESULT_LOCATION }}</h3>
+      <h2 class="result">{{ RESULT }}</h2>
+    </div>
+    {% include "footer-section.html" %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/f8e1a90484.js" crossorigin="anonymous"></script>
+  </body>
+</html>

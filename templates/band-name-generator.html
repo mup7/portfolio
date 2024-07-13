@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head-section.html" %}
+    <title>Band Name Generator</title>
+  </head>
+  <body>
+    {% include "navbar-section.html" %}
+    <div class="main-section">
+      <h1 class="project-title">Welcome to the Band Name Generator!</h1>
+      <form method="post" action="{{ url_for('band_name_generator') }}">
+        <div class="input-box">
+          <label for="band-name-generator-city">What's the name of the city you grew up in?</label>
+          <input id="band-name-generator-city" type="text" placeholder="City Name" name="cityName" required>
+          <br>
+          <label for="band-name-generator-pet">What's the name of your pet?</label>
+          <input id="band-name-generator-pet" type="text" placeholder="Pet Name" name="petName" required>
+        </div>
+        <input type="submit" value="Generate Band Name" class="project-btn btn-2">
+      </form>
+      <h2 class="result">Your band name could be: {{ BAND_NAME }}</h2>
+    </div>
+    {% include "footer-section.html" %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/f8e1a90484.js" crossorigin="anonymous"></script>
+  </body>
+</html>
