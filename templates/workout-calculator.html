@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head-section.html" %}
+    <title>Workout Calculator</title>
+  </head>
+  <body>
+    {% include "navbar-section.html" %}
+    <div class="main-section">
+      <h1 class="project-title">Welcome to the Workout Calculator!</h1>
+      <form method="post" action="{{ url_for('workout_calculator') }}">
+        <div class="input-box">
+          <label for="workout-calculator-weight">Weight (lbs):</label>
+          <input id="workout-calculator-weight" type="text" placeholder="Weight (lbs)" name="weight" required>
+          <br>
+          <label for="workout-calculator-height-feet">Height (ft' in''):</label>
+          <div class="height-inputs">
+            <input id="workout-calculator-height-feet" type="text" placeholder="Feet (ft)" name="heightFeet" required>
+            <input id="workout-calculator-height-inches" type="text" placeholder="Inches (in)" name="heightInches" required>
+          </div>
+          <br>
+          <label for="workout-calculator-age">Age (years):</label>
+          <input id="workout-calculator-age" type="text" placeholder="Age (years)" name="age" required>
+          <br>
+          <label for="workout-calculator-query">Tell me about your exercise:</label>
+          <input id="workout-calculator-query" type="text" placeholder="Exercise" name="query" required>
+        </div>
+        <input type="submit" value="Calculate Exercise" class="project-btn btn-2">
+      </form>
+      {% if CALCULATE_WORKOUT: %}
+      <h2 class="result">Exercise: {{ RESULT["name"].title() }}</h2>
+      <h3 class="result">Calories: {{ RESULT["nf_calories"] }}</h3>
+      <h3 class="result">Duration: {{ RESULT["duration_min"] }} mins</h3>
+      <h3 class="result">Metabolic Equivalent of Task (MET): {{ RESULT["met"] }}</h3>
+      {% endif %}
+
+      {% if CALCULATE_WORKOUT == False: %}
+      <h2 class="result">Exercise: N/A</h2>
+      {% endif %}
+    </div>
+    {% include "footer-section.html" %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/f8e1a90484.js" crossorigin="anonymous"></script>
+  </body>
+</html>

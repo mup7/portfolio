@@ -1,5 +1,5 @@
-import os
 from dotenv import load_dotenv
+import os
 from flask import Flask, render_template, request
 import smtplib
 import datetime
@@ -10,8 +10,6 @@ import requests
 load_dotenv()
 
 # smtplib constants
-# MY_EMAIL = os.getenv("MY_EMAIL")
-# MY_PASSWORD = os.getenv("MY_PASSWORD")
 MY_EMAIL = os.environ.get("MY_EMAIL")
 MY_PASSWORD = os.environ.get("MY_PASSWORD")
 # genderize constant
@@ -19,12 +17,34 @@ GENDERIZE_API_ENDPOINT = "https://api.genderize.io"
 # ageify constant
 AGEIFY_API_ENDPOINT = "https://api.agify.io"
 # openweathermap constants
-# OPENWEATHERMAP_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 OPENWEATHERMAP_API_KEY = os.environ.get("OPENWEATHERMAP_API_KEY")
 GEOCODING_API_ENDPOINT = "http://api.openweathermap.org/geo/1.0/direct"
 OPENWEATHERMAP_API_ENDPOINT = "http://api.openweathermap.org/data/2.5/forecast"
+# nutritionix constants
+NUTRITIONIX_APP_ID = os.environ.get("NUTRITIONIX_APP_ID")
+NUTRITIONIX_API_KEY = os.environ.get("NUTRITIONIX_API_KEY")
+NUTRITIONIX_ENDPOINT = "https://trackapi.nutritionix.com/v2/natural/exercise"
+NUTRITIONIX_HEADERS = {
+    "x-app-id": NUTRITIONIX_APP_ID,
+    "x-app-key": NUTRITIONIX_API_KEY
+}
 
 app = Flask(__name__)
+
+
+def send_email(subject, full_name, email, phone_number, message):
+    with smtplib.SMTP("smtp.gmail.com") as connection:
+        connection.starttls()  # Secure the connection
+        connection.login(MY_EMAIL, MY_PASSWORD)
+        connection.sendmail(
+            from_addr=MY_EMAIL, 
+            to_addrs=MY_EMAIL, 
+            msg=f"Subject: {subject}\n\n"
+            f"Full Name: {full_name}\n"
+            f"Email: {email}\n"
+            f"Phone Number: {phone_number}\n"
+            f"Message: {message}"
+        )
 
 
 # Built-in way to inject common variables into the template context for all templates rendered
@@ -55,25 +75,14 @@ def contact():
     """
     if request.method == "POST":
         data = request.form
-        full_name = data["fullName"]
-        email = data["email"]
-        phone_number = data["phoneNumber"]
-        subject = data["subject"]
-        message = data["message"]
+        full_name_input = data["fullName"]
+        email_input = data["email"]
+        phone_number_input = data["phoneNumber"]
+        subject_input = data["subject"]
+        message_input = data["message"]
 
         # Send the email
-        with smtplib.SMTP("smtp.gmail.com") as connection:
-            connection.starttls()  # Secure the connection
-            connection.login(MY_EMAIL, MY_PASSWORD)  # Login to the email server
-            connection.sendmail(
-                from_addr=MY_EMAIL, 
-                to_addrs=MY_EMAIL, 
-                msg=f"Subject: {subject}\n\n"
-                f"Full Name: {full_name}\n"
-                f"Email: {email}\n"
-                f"Phone Number: {phone_number}\n"
-                f"Message: {message}"
-            )
+        send_email(subject=subject_input, full_name=full_name_input, email=email_input, phone_number=phone_number_input, message=message_input)
         return render_template(template_name_or_list="thank-you.html")
     return render_template(template_name_or_list="index.html")
 
@@ -263,7 +272,7 @@ def rock_paper_scissors():
     return render_template(template_name_or_list="rock-paper-scissors.html")
 
 
-# Guess Gender
+# Gender Guesser
 @app.route(rule="/projects/gender-guesser", methods=["GET", "POST"])
 def gender_guesser():
     """
@@ -410,5 +419,37 @@ def weather_forecaster():
     return render_template(template_name_or_list="weather-forecaster.html", FORECAST=forecast)
 
 
+# Workout Calculator
+@app.route(rule="/projects/workout-calculator", methods=["GET", "POST"])
+def workout_calculator():
+    calculate_workout = None
+    if request.method == "POST":
+        try:
+            data = request.form
+            weight_lb = float(data["weight"])
+            weight_kg = int(weight_lb / 2.2046)
+            height_ft = int(data["heightFeet"])
+            height_in = float(data["heightInches"])
+            total_height_in = float((height_ft * 12) + height_in)
+            height_cm = int(total_height_in * 2.54)
+            age = int(data["age"])
+            query = data["query"]
+            nutritionix_params = {
+                "query": query,
+                "weight_kg": weight_kg,
+                "height_cm": height_cm,
+                "age": age
+            }
+            nutritionix_response = requests.post(url=NUTRITIONIX_ENDPOINT, headers=NUTRITIONIX_HEADERS, json=nutritionix_params)
+            nutritionix_result = nutritionix_response.json()
+            result = nutritionix_result["exercises"][0]
+            calculate_workout = True
+            return render_template(template_name_or_list="workout-calculator.html", CALCULATE_WORKOUT=calculate_workout, RESULT=result)
+        except ValueError:
+            calculate_workout = False
+            return render_template(template_name_or_list="workout-calculator.html", CALCULATE_WORKOUT=calculate_workout)
+    return render_template(template_name_or_list="workout-calculator.html", CALCULATE_WORKOUT=calculate_workout)
+
+
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
